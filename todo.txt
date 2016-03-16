@@ -1,0 +1,51 @@
+TODO-Liste
+
+- Timeout hoeher als 3 Sekunden einstellen. besser 6 oder 10 Sekunden
+- handler fuer timeout einbauen, damit dieser registriert wird und nicht als
+  empfangener Wert 0 erkannt wird.
+- Empfangsqualitaetsauswertung in t_clock Klasse
+- get_time function soll eine struktur t_time zurueckgeben???
+  -->ok
+- Problem beim allerersten Oeffnen der Uhr nach Rechnerkaltstart: Es wird eine Sekunde empfangen
+  und dann bekommt die Uhr wohl kein Empfang mehr.
+  GRUND: DTR wird nach einer Sekunde automatisch wieder zurueckgeschaltet.
+         Handshaking umschalten?
+   --> Zweites Mal DTR usw. setzten lassen --> scheint zu gehen
+- FEHLER IN DECODIERUNG: DIE WERTIGKEIT DER BITSTELLEN IST WAHRSCHEINLICH DOCH
+  ANDER, SIEHE BCD-CODE UND ORIGINAL FUNKUHRPROGRAMM WINDOWS
+   --> Codierung und Bitwertigkeit ist auf jeden Fall ok
+   --> Ringpuffer auf 5 Minuten erweitern und auch auf diese 5 Minuten pruefen
+   --> die Nullen am Anfang detektieren, die z.Zt. immer 0 sind (gefaehrlich?) --> nicht noetig
+   --> OK
+
+- Idee:  Den Puffer genau so gross machen wie 2 ...n Minuten (* 59 Zellen)
+         Dann den Lesepointer komplett einsparen und immer relativ oder direkt
+         ab dem Schreibpointer Ueberpruefungen machen --> ok
+- Bug!!: Ringpuffer funktioniert auch nicht richtig!  --> ok
+- Signal Handler (Strg-C) Installieren und dann Versorgungsleitungen auf
+         Zustand setzten, dass CLock inaktiv wird und COM-Port schliessen.
+
+- Timezone Support (wird von DosGetDateTime und umgekehrt unterstuetzt)
+  --> ok (aber nur fuer Deutschland)
+- printf durch cout ersetzen (CPU-Zeit-schonen und C++ konform)
+- 4  oder 5 Minuten in Ringpuffer aufzeichnen und eine Mehrheitsentscheidung
+  (3 Minuten ok CRC und relative Zeit zu den anderen) muessen ok sein.
+  Erhoet sicherheit und wahrscheinlichkeit, dass Minuten erkannt werden
+  Dazu muss die letzte Minute im Puffer mit mindestens 2 and anderen im Puffer
+  uebereinstimmen.
+- wenn man einmal Synchron ist, dann braucht man erst nach 59 Bits den Ring-Puffer
+  nach neuen synchronen Daten zu pruefen, frueher kann das nicht auftreten
+  CPU-Zeitersparnis
+- beim read auf Clock Empfangende Bytes auswerten!!
+- FEHLER: Weekday von DFC77 Signal: Sonntag = 7
+                      OS/2        : Sonntag = 0 ??
+  --> muesste ok sein
+- !!! Sommer/Winterzeit umstellung wird nicht gemacht, da dann DCF77-Zeit und 
+  Rechnerzeit mehr als 3 Minuten abweichen.
+  --> Vergleichsoperatoren: Zeiten ueber Zeitzone normalisieren
+  --> OK (Zeitzonennormalisierung in   int minutes_of_week(void); einebaut
+- !!! unbenutzte Teile des Singals sind immer Null, das in Parity-Check einbauen
+- !!!!!!!!!!!!!!!!!!
+  Zeitumstellung am 30.03.2003 um 02.00 auf 03.00 funktionierte nicht:
+  "Abweichung Systemzeit <--> empfangene Zeit zu gross"
+  Binary vom 03.12.02 auf \\tiuz ausgefuehrt

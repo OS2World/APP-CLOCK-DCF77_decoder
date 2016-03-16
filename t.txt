@@ -1,0 +1,10 @@
+-->DUMP <-- DCF77 decoder for Gude Expert Mouse Clock (OS/2)
+Version 1.0 alpha (test & debug)
+2002 by Markus Rosellen
+
+Trying to open com1...ok
+SetBaudRate rc= 0
+SetLineCtrl rc= 0
+SetModemctrl rc= 0
+SetDCBinfo rc= 0
+SetModemctrl rc= 0

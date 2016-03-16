@@ -1,0 +1,51 @@
+:TARGET.SUFFIXES
+:TARGET.SUFFIXES
+:DEPENDENCY..cpp .obj 
+:TARGET.all
+:DEPENDENCY.
+.\dcf77.exe
+:RULE..cpp.obj
+:ACTION.Compile::C++ Compiler
+:COMMAND.
+icc.exe /Tdp /Ti /Rn /Gd /C %s
+:RULE.{n:\ablage\markus\c\dcf77}.cpp.obj
+:ACTION.Compile::C++ Compiler
+:COMMAND.
+icc.exe /Tdp /Ti /Rn /Gd /C %s
+:TARGET..\dcf77.exe
+:DEPENDENCY.
+.\os_api.obj
+.\zeit.obj
+.\clock.obj
+.\main.obj
+:ACTION.Link::Linker
+:COMMAND.
+icc.exe @<<
+ /B" /de"
+ /Fedcf77.exe 
+ .\os_api.obj
+ .\zeit.obj
+ .\clock.obj
+ .\main.obj
+<<
+:TARGET..\os_api.obj
+:DEPENDENCY.
+n:\ablage\markus\c\dcf77\os_api.cpp
+{n:\ablage\markus\c\dcf77;$(INCLUDE);}zeit.h
+{n:\ablage\markus\c\dcf77;$(INCLUDE);}os_api.h
+:TARGET..\main.obj
+:DEPENDENCY.
+n:\ablage\markus\c\dcf77\main.cpp
+{n:\ablage\markus\c\dcf77;$(INCLUDE);}zeit.h
+{n:\ablage\markus\c\dcf77;$(INCLUDE);}clock.h
+{n:\ablage\markus\c\dcf77;$(INCLUDE);}os_api.h
+:TARGET..\clock.obj
+:DEPENDENCY.
+n:\ablage\markus\c\dcf77\clock.cpp
+{n:\ablage\markus\c\dcf77;$(INCLUDE);}zeit.h
+{n:\ablage\markus\c\dcf77;$(INCLUDE);}clock.h
+{n:\ablage\markus\c\dcf77;$(INCLUDE);}os_api.h
+:TARGET..\zeit.obj
+:DEPENDENCY.
+n:\ablage\markus\c\dcf77\zeit.cpp
+{n:\ablage\markus\c\dcf77;$(INCLUDE);}zeit.h
